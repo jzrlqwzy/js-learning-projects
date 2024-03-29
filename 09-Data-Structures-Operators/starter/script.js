@@ -415,7 +415,7 @@ for (const [key, { open, close }] of entries) {
   console.log(`On ${key}, we open at ${open} and close at ${close}`);
 }
 
-//Sets
+// Sets
 const ordersSet = new Set([
   'pasta',
   'pizza',
@@ -514,3 +514,80 @@ console.log(question.keys());
 console.log([...question.keys()]);
 console.log(question.values());
 console.log([...question.values()]);
+
+// Date Structures Overview
+
+// Source of Data
+// 1) From program itself:Written in source code
+// 2) From UI: Input from the user or written in DOM
+// 3) *From external Source: Fetched from example from web API(Form: JSON)
+// Souce of Data => Collection of Data => Data Structure =>
+// simple list? Arrays or Sets
+// key/value pairs? Objects or Maps (key allow to describe values)
+
+// Arrays VS. Sets
+// Array:
+// 1. ordered list
+// 2. might have duplicates
+// 3. manipulate data
+
+// Set:
+// 1. unique values
+// 2. `high-performance` is important
+// 3. remove duplicates form array
+
+// Objects VS. Maps
+// Object:
+// 1.easy to write and access with . and []
+// 2. use when need to include functions(methods)
+// 3. use when working with JSON(can be converted to Map but NOT recommended)
+
+// Map：
+// 1. better performance
+// 2. have ANY data tyoe
+// 3. easy to iterate
+// 4. easy to compute size
+// 5. simply need map key to value
+// 6. need key that are not string
+
+// Coding Challenge #3
+
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that happened (no duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+const events = new Set(gameEvents.values());
+console.log(events);
+
+gameEvents.delete(64);
+console.log(gameEvents);
+
+const mins = new Set(gameEvents.keys());
+console.log(`An event happened, on average, every ${90 / mins.size} minutes`);
+
+for (const [key, value] of gameEvents) {
+  const half = key <= 45 ? 'FIRST' : 'SECOND';
+  console.log(`[${half} HALF] ${key}: ${value}`);
+}
