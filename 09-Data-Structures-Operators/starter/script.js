@@ -288,3 +288,229 @@ console.log('----------------------');
 game.printGoals(...game.scored);
 
 team1 < team2 && console.log(`Team 1 is more likely to win.`);
+
+for (const [i, el] of game.scored.entries()) {
+  console.log(`Goal ${i + 1}: ${el}`);
+}
+
+const oddsValues = Object.values(game.odds);
+let total = 0;
+for (const value of oddsValues) {
+  total += value;
+}
+console.log(total / oddsValues.length);
+
+const oddsEntries = Object.entries(game.odds);
+for (const [key, value] of oddsEntries) {
+  const teamStr = key === 'x' ? 'draw' : `victory of ${game[key]}`;
+  console.log(`Odd of ${teamStr}: ${value}`);
+}
+
+// For-of Loop
+const menu1 = [...restaurant.mainMenu, ...restaurant.starterMenu];
+for (const item of menu1) {
+  console.log(item);
+}
+
+for (const item of menu1.entries()) {
+  console.log(item);
+}
+
+for (const item of menu1.entries()) {
+  console.log(`${item[0] + 1}: ${item[1]}`);
+}
+
+for (const [i, el] of menu1.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
+console.log([...menu1.entries()]);
+
+// Enhacned Object Literals
+const weekday = ['mon', 'tue', 'weds', 'thur', 'fri', 'sat', 'sun'];
+const hours = {
+  [weekday[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekday[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekday[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+const restaurant1 = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  // Enhacned Object Literals
+  hours,
+  orderDelivery({ mainIndex = 0, starterIndex = 1, time = '20:00', address }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+
+  orderPasta(ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
+  },
+
+  orderPizza(mainIngredients, ...otherIngredients) {
+    console.log(mainIngredients);
+    console.log(otherIngredients);
+  },
+};
+
+// Optional Chaining(ES2020)
+// On property
+if (restaurant1.hours && restaurant1.hours.mon) {
+  console.log(restaurant1.hours.mon.open);
+}
+
+console.log(restaurant1.hours.mon?.open);
+console.log(restaurant1.hours?.mon?.open);
+
+// Real Example
+for (const day of weekday) {
+  const open = restaurant1.hours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open at ${open}`);
+}
+
+// On Methods
+console.log(
+  restaurant1.orderDumplings?.('pork', 'asparagus') ?? "Method doesn' exist."
+);
+
+// On Arrays
+// const john = [{ name: 'John', age: 18 }];
+const john = [];
+console.log(john[0]?.name ?? 'Array is empty');
+
+// For Loop Objects in a indirect way
+// Property names(keys)
+const keys = Object.keys(hours);
+console.log(keys);
+
+let openStr = `we are open on ${keys.length} days: `;
+for (const day of keys) {
+  openStr += `${day},`;
+}
+console.log(openStr);
+
+// Property Values
+const values = Object.values(hours);
+
+// Entire Object
+const entries = Object.entries(hours);
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key}, we open at ${open} and close at ${close}`);
+}
+
+//Sets
+const ordersSet = new Set([
+  'pasta',
+  'pizza',
+  'pizza',
+  'risotto',
+  'pasta',
+  'pizza',
+]);
+
+console.log(ordersSet);
+console.log(new Set('John'));
+console.log(ordersSet.size);
+console.log(ordersSet.has('burger'));
+ordersSet.add('rice');
+ordersSet.add('rice');
+ordersSet.delete('risotto');
+// ordersSet.clear();
+console.log(ordersSet);
+
+for (const order of ordersSet) console.log(order);
+
+const staff = ['waiter', 'chef', 'manager', 'waiter', 'chef'];
+const staffUnique = new Set(staff);
+console.log(staffUnique);
+
+console.log(new Set(['waiter', 'chef', 'manager', 'waiter', 'chef']).size);
+console.log(new Set('John').size);
+
+// Maps
+// create
+const rest = new Map();
+// key-value pair
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'we are open <3')
+  .set(false, 'we are closed :(');
+
+const time = 19;
+console.log(rest.get(time >= rest.get('open') && time <= rest.get('close')));
+console.log(rest.has('categories'));
+rest.delete(2);
+
+const array = [1, 2];
+rest.set(array, 'Test');
+console.log(rest.get(array));
+
+rest.set(document.querySelector('h1'), 'heading');
+
+console.log(rest);
+console.log(rest.size);
+// rest.clear();
+
+// Create with Array
+const question = new Map([
+  ['question', 'what is the best programming language?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct!'],
+  [false, 'Try again!'],
+]);
+
+console.log(question);
+
+// Convert Object to Map
+// Object -> entrie -> Map
+console.log(Object.entries(hours));
+const hoursMap = new Map(Object.entries(hours));
+console.log(hoursMap);
+
+// Iteration
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Anwser ${key}: ${value}`);
+}
+
+// const answer = Number(prompt('Your answer:'));
+const answer = 3;
+console.log(answer);
+
+console.log(question.get(question.get('correct') === answer));
+
+// Covert map to array
+console.log(question);
+
+console.log([...question]);
+console.log(question.entries());
+console.log(question.keys());
+console.log([...question.keys()]);
+console.log(question.values());
+console.log([...question.values()]);
