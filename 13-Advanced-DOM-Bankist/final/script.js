@@ -143,12 +143,16 @@ const stickyNav = function (entries) {
   const [entry] = entries;
   // console.log(entry);
 
+  // isIntersecting is an arrtibute of entry
+  // which determine if viewport is intersecting with header(target element) in this case
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
 };
 
 const headerObserver = new IntersectionObserver(stickyNav, {
+  // `null` here means the entire viewport
   root: null,
+  // 0 percent of the header is visible
   threshold: 0,
   rootMargin: `-${navHeight}px`,
 });
